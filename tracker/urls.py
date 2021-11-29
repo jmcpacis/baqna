@@ -16,6 +16,7 @@ urlpatterns = [
     path('patient/<str:pk>', views.patient, name = 'patient'),
     path('editPatient/<str:pk>', views.editPatient, name ='editPatient'),
     path('appointment/<str:pk>', views.appointment, name = 'appointment'),
+    path('editAppointment/<str:pk>', views.editAppointment, name="editAppointment"),
     path('portal/<str:pk>', views.portal, name = 'portal'), 
     path('certificate/<str:pk>', views.certificate, name='certificate'),
     path('generatepdf/<str:pk>', views.PdfDetail.as_view(), name="generatepdf"),

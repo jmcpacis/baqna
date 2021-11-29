@@ -67,6 +67,11 @@ def loginPage(request):
                 if user is not None:
                     login(request, user)
                     return redirect('home')
+                elif username == '' or password == '':
+                    messages.info(request, 'Username or password is blank. Please try again.')
+                elif username is not None and password == '':
+                    messages.info(request, 'Password is blank. Please try again.')
+                    context = {username}
                 else:
                     messages.info(request, 'Username or password is incorrect. Please try again.')
         context = {}
@@ -190,6 +195,44 @@ def appointment(request, pk):
 
 
 @login_required(login_url='login')
+def editAppointment(request, pk):
+    patient = Patient.objects.get(id=pk)
+    #edit_appointment_form = EditAppointmentForm(instance=patient)
+
+    appointments = Appointment.objects.all()
+
+    # -- Age (X Years Y Months) --
+    curr_date = datetime.date.today()
+    months = curr_date.month - patient.birthdate.month
+    years = curr_date.year - patient.birthdate.year
+    age = "{} year {} month".format(years, months)
+
+    if (request.method == "GET"):
+        edit_appointment_form = EditAppointmentForm(instance=patient)
+    else:
+        edit_appointment_form = EditAppointmentForm(request.POST, instance=patient)
+        if edit_appointment_form.is_valid():
+            edit_appointment_form.save()
+
+        return redirect('/appointment/' + pk)
+
+    # if(request.method == "POST"):
+    #     edit_appointment_form = EditAppointmentForm(request.POST, instance=patient)
+    #     if edit_appointment_form.is_valid():
+    #         edit_appointment_form.save()
+       
+    #     return redirect('/appointment/' + pk)
+
+    data = {
+        'patient': patient,
+        'edit_appointment_form': edit_appointment_form,
+        'appointments': appointments,
+        'age': age,
+    }
+    return render(request, 'patientmonitoring/editAppointment.html', data)
+
+
+@login_required(login_url='login')
 def portal(request, pk):
     patient = Patient.objects.get(id=pk)
     portal_form = PortalForm()
@@ -226,8 +269,8 @@ def portal(request, pk):
 @login_required(login_url='login')
 def certificate(request, pk):
     patient = Patient.objects.get(id=pk)
-    
-    cert_date = None
+    cert_date_form = CertDateForm(instance=patient)
+    #cert_date = None
 
     # -- Age (x Years y Months) -- 
     curr_date = datetime.date.today()
@@ -236,31 +279,47 @@ def certificate(request, pk):
     age = "{} year {} month".format(years, months)
 
     if(request.method == "POST"):
-        cert_date = request.POST['sign_cert']
+         cert_date_form = EditAppointmentForm(request.POST, instance=patient)
+         if cert_date_form.is_valid():
+             cert_date_form.save()
+       
+         return redirect('/certificate/' + pk)
 
-    if cert_date:
-        if patient:
-            patient.cert_date = cert_date
-            patient.save()
-        return redirect('/certificate/' + pk)
+    # if(request.method == "POST"):
+    #     cert_date = request.POST.get['sign_cert']
+
+    # if cert_date:
+    #     if patient:
+    #         patient.cert_date = cert_date
+    #         patient.save()
+    #     return redirect('/certificate/' + pk)
 
     data = {
         'patient': patient, 
         'age': age,
         'curr_date': curr_date,
+        'cert_date_form': cert_date_form,
     }
     return render(request, 'patientmonitoring/certificate.html', data)
 
 class PdfDetail(PDFTemplateResponseMixin, DetailView):
-    model = Patient
     template_name = 'patientmonitoring/pdf_cert.html'
+    model = Patient
     download_filename = 'Vaccine Certificate of {}-{}'.format(model.last_name, model.first_name)
     context_object_name = 'patient'
 
-    # curr_date = datetime.date.today()
-    # months = curr_date.month - model.birthdate.month
-    # years = curr_date.year - model.birthdate.year
-    # age = "{} year {} month".format(years, months)
+    # def get_context_data(self, request, pk, **kwargs):
+    #     return super(PdfDetail, self).get_context_data(
+    #         model = Patient,
+    #         download_filename = 'Vaccine Certificate of {}-{}'.format(model.last_name, model.first_name),
+    #         context_object_name = 'patient',
+    #         # -- Age (x Years y Months) -- 
+    #         curr_date = datetime.date.today(),
+    #         months = curr_date.month - patient.birthdate.month,
+    #         years = curr_date.year - patient.birthdate.year,
+    #         age = "{} year {} month".format(years, months)
+    #     )
+        
 
 @login_required(login_url='login')
 def vaccine(request, pk):

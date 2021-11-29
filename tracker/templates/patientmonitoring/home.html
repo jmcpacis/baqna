@@ -65,10 +65,10 @@
             {% for patient in patients %}
             <tbody>
               <tr onclick="window.location='{% url 'patient' patient.id %}'">
-                <td>000{{ patient.id }}</td>
+                <td>{{ patient.id }}</td>
                 <td>{{ patient.first_name }}</td>
                 <td>{{ patient.last_name }}</td>
-                <td>{{ patient.birthdate }}</td>
+                <td>{{ patient.birthdate|date:"m/d/Y" }}</td>
               </tr>
             </tbody>
             {% empty %}

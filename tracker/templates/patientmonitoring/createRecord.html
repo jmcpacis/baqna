@@ -14,8 +14,8 @@
         <td>{{patient_form.nick_name}}</td>
         <td class="table-warning" colspan="2">Attending Doctor<span style="color: red;">*</span></td>
         <td colspan="2">{{patient_form.attending_doctor}}</td>
-        <td class="table-warning">Patient Record #</td>
-        <td class="table-warning" id="record_no">{{latest_id}}</td>
+        <td class="table-warning">Record #</td>
+        <td class="table-warning" id="record_no" style="text-align: left;">{{latest_id}}</td>
       </tr>
       <tr>
         <td class="table-warning">First<span style="color: red;">*</span></td>
@@ -169,7 +169,7 @@
   }
 
   // --Record Number--
-  document.getElementById('record_no').innerHTML = "000" + (parseInt(document.getElementById('record_no').innerHTML) + 1);
+  document.getElementById('record_no').innerHTML = (parseInt(document.getElementById('record_no').innerHTML) + 1);
 
   // --Check box for Emergency Contact--
   function check(cb){

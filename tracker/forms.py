@@ -63,10 +63,10 @@ class CreateRecordFormPatient(ModelForm):
 
     birthdate = forms.DateField(
         widget=DateInput(
-            attrs={'class': 'form-control', 'id': 'dob', 'placeholder': 'mm-dd-yyyy'},
-            format='%m-%d-%Y',
+            attrs={'class': 'form-control', 'id': 'dob', 'placeholder': 'dd/mm/yyyy'},
+            format='%d-%m-%Y',
         ),
-        input_formats=['%m-%d-%Y']
+        input_formats=['%d-%m-%Y']
     )
     class Meta:
         model = Patient
@@ -109,14 +109,25 @@ class CreateRecordFormPatient(ModelForm):
             'relation2': TextInput(attrs={'class': 'form-control', 'id': 'relation2', 'placeholder': 'Relation'}),   
         }
 
-
-class AppointmentForm(ModelForm):
-    date = forms.DateField(
+class CertDateForm(ModelForm):
+    cert_date = forms.DateField(
         widget=DateInput(
             attrs={'class': 'form-control', 'id': 'date', 'placeholder': 'mm-dd-yyyy'},
             format='%m-%d-%Y',
         ),
         input_formats=['%m-%d-%Y']
+    )
+    class Meta:
+        model = Patient
+        fields = ('cert_date',)
+
+class AppointmentForm(ModelForm):
+    date = forms.DateField(
+        widget=DateInput(
+            attrs={'class': 'form-control', 'id': 'date', 'placeholder': 'mm/dd/yyyy'},
+            format='%m/%d/%Y',
+        ),
+        input_formats=['%m/%d/%Y']
     )
     class Meta:
         model = Appointment
@@ -128,6 +139,14 @@ class AppointmentForm(ModelForm):
             'doctor': Select(attrs={'class': 'form-control', 'placeholder': 'Doctor'}),
             'visit': TextInput(attrs={'class': 'form-control', 'placeholder': 'Visit'}),
             'location': TextInput(attrs={'class': 'form-control', 'placeholder': 'Location'}),
+        }
+
+class EditAppointmentForm(ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ('status','patient')
+        widgets = {
+            'patient': HiddenInput(attrs={'type': 'hidden'}),
         }
 
 class PortalForm(UserCreationForm):

@@ -12,7 +12,7 @@
         {% endfor %}
     </div>
     <div class="row">
-        <div class="col-lg-2" style="background-color: rgb(255, 255, 255);display: flex; justify-content: center; align-items: center; padding-top: 8%; padding-bottom: 8%;">
+        <div class="col-lg-2" style="background-color: rgb(255, 255, 255); display: flex; justify-content: center; margin-top: 5%;">
             <div class="btn-group-vertical" style="display: block;">
               <a class="btn btn-outline-primary" href="{% url 'patient' patient.id %}">Profile</a>
               <a class="btn btn-outline-primary" href="{% url 'appointment' patient.id %}">Appointment</a>
@@ -40,7 +40,7 @@
                     {{patient.attending_doctor}}
                 </p> 
                 <form action="post" style="display:inline;">
-                    <button type="submit" class="btn btn-primary" value="{{curr_date}}" name="sign_cert">Dr. Sign</button>
+                    <button type="submit" class="btn btn-primary" name="sign_cert">Dr. Sign</button>
                 </form>
                 <a style="display:inline;" 
                   class="btn btn-primary" 

@@ -5,7 +5,7 @@
 </style>
 <div class="container-fluid" style="padding:1%; ">
     <div class="row">
-        <div class="col-lg-2" style="background-color: rgb(255, 255, 255);display: flex; justify-content: center; align-items: center; padding-top: 8%; padding-bottom: 8%;">
+        <div class="col-lg-2" style="background-color: rgb(255, 255, 255); display: flex; justify-content: center; margin-top: 5%;">
           <div class="btn-group-vertical" style="display: block;">
             <a class="btn btn-outline-primary" href="{% url 'patient' patient.id %}">Profile</a>
             <a class="btn btn-outline-primary" href="#">Appointment</a>
@@ -34,7 +34,7 @@
               <tbody>
                 <tr>
                   <td>{{appointment.status}}</td>
-                  <td>{{appointment.date}}</td>
+                  <td>{{appointment.date|date:"m/d/Y"}}</td>
                   <td>{{appointment.time}}</td>
                   <td>{{appointment.doctor}}</td>
                   <td>{{appointment.visit}}</td>
@@ -47,6 +47,9 @@
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#schedule" style="margin-top: 2%;">
               Schedule Appointment
             </button>
+            <a class="btn btn-primary" style="margin-top: 2%;" href="{% url 'editAppointment' patient.id %}">
+              Edit Appointment
+            </a>
             {% if messages %}
               {% for message in messages %}
                 {% if message.tags == 'success' %}
