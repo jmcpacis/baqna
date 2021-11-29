@@ -1,0 +1,430 @@
+{% include 'patientmonitoring/info_header.html' %}
+{% block content %}
+
+<style>
+    
+</style>
+
+
+<div class="container-fluid" style="padding:1%; ">
+    <div class="row">
+        <div class="col-lg-2" style="background-color: rgb(255, 255, 255);display: flex; justify-content: center; align-items: center; padding-top: 8%; padding-bottom: 8%;">
+            <div class="btn-group-vertical" style="display: block;">
+              <a class="btn btn-outline-primary" href="{% url 'patient' patient.id %}">Profile</a>
+              <a class="btn btn-outline-primary" href="{% url 'appointment' patient.id %}">Appointment</a>
+              <a class="btn btn-outline-primary" href="#">Vaccine</a>
+              <a class="btn btn-outline-primary" href="{% url 'portal' patient.id %}">Portal</a>
+              <a class="btn btn-outline-primary" href="{% url 'certificate' patient.id %}">Certificate</a>
+            </div>
+        </div>
+
+        <div class="col-lg-10" style="background-color: white; padding-top: 0%; padding-bottom: 0%;">
+            <div class="vaccine-table">
+                <form class="edit-vaccine-form" action="" method="POST">
+                    <table class="table-bordered align-middle table-sm" style="width: 100%;">
+                        {% csrf_token %}
+                        <thead class="thead-warning" style="background-color: rgb(214, 214, 214);">
+                            <tr>
+                                <td><b>Age</b></td>
+                                <td><b>Vaccine</b></td>
+                                <td><b>Dose</b></td>
+                                <td><b>Brand</b></td>
+                                <td><b>Date Given</b></td>
+                                <td><b>Location</b></td>
+                                <td><b>Remarks</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan='2'>Birth</td>
+                                <td>BCG</td>
+                                <td>1 of 1</td>
+                                <td>{{vaccine_form.bcg_brand}}</td>
+                                <td>{{vaccine_form.bcg_date}}</td>
+                                <td>{{vaccine_form.bcg_loc}}</td>
+                                <td>{{vaccine_form.bcg_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Hepatitis B #1</td>
+                                <td>1 of 3</td>
+                                <td>{{vaccine_form.hepb1_brand}}</td>
+                                <td>{{vaccine_form.hepb1_date}}</td>
+                                <td>{{vaccine_form.hepb1_loc}}</td>
+                                <td>{{vaccine_form.hepb1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='6' colspan='1' >2 to 3 Months</td>
+                                <td>Hepatitis B #2</td>
+                                <td>2 of 3</td>
+                                <td>{{vaccine_form.hepb2_brand}}</td>
+                                <td>{{vaccine_form.hepb2_date}}</td>
+                                <td>{{vaccine_form.hepb2_loc}}</td>
+                                <td>{{vaccine_form.hepb2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>DTaP/DTwP #1</td>
+                                <td>1 of 5</td>
+                                <td>{{vaccine_form.dt1_brand}}</td>
+                                <td>{{vaccine_form.dt1_date}}</td>
+                                <td>{{vaccine_form.dt1_loc}}</td>
+                                <td>{{vaccine_form.dt1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>IPV/OPV #1</td>
+                                <td>1 of 5</td>
+                                <td>{{vaccine_form.ip1_brand}}</td>
+                                <td>{{vaccine_form.ip1_date}}</td>
+                                <td>{{vaccine_form.ip1_loc}}</td>
+                                <td>{{vaccine_form.ip1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HiB #1</td>
+                                <td>1 of 4</td>
+                                <td>{{vaccine_form.hi1_brand}}</td>
+                                <td>{{vaccine_form.hi1_date}}</td>
+                                <td>{{vaccine_form.hi1_loc}}</td>
+                                <td>{{vaccine_form.hi1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>PCV #1</td>
+                                <td>1 of 4</td>
+                                <td>{{vaccine_form.pcv1_brand}}</td>
+                                <td>{{vaccine_form.pcv1_date}}</td>
+                                <td>{{vaccine_form.pcv1_loc}}</td>
+                                <td>{{vaccine_form.pcv1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Rotavirus #1</td>
+                                <td>1 of 2 (or 3)</td>
+                                <td>{{vaccine_form.rota1_brand}}</td>
+                                <td>{{vaccine_form.rota1_date}}</td>
+                                <td>{{vaccine_form.rota1_loc}}</td>
+                                <td>{{vaccine_form.rota1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='5' colspan='1' >4 to 5 Months</td>
+                                <td>DTaP/DTwP #2</td>
+                                <td>2 of 5</td>
+                                <td>{{vaccine_form.dt2_brand}}</td>
+                                <td>{{vaccine_form.dt2_date}}</td>
+                                <td>{{vaccine_form.dt2_loc}}</td>
+                                <td>{{vaccine_form.dt2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>IPV/OPV #2</td>
+                                <td>2 of 5</td>
+                                <td>{{vaccine_form.ip2_brand}}</td>
+                                <td>{{vaccine_form.ip2_date}}</td>
+                                <td>{{vaccine_form.ip2_loc}}</td>
+                                <td>{{vaccine_form.ip2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HiB #2</td>
+                                <td>2 of 4</td>
+                                <td>{{vaccine_form.hi2_brand}}</td>
+                                <td>{{vaccine_form.hi2_date}}</td>
+                                <td>{{vaccine_form.hi2_loc}}</td>
+                                <td>{{vaccine_form.hi2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>PCV #2</td>
+                                <td>2 of 4</td>
+                                <td>{{vaccine_form.pcv2_brand}}</td>
+                                <td>{{vaccine_form.pcv2_date}}</td>
+                                <td>{{vaccine_form.pcv2_loc}}</td>
+                                <td>{{vaccine_form.pcv2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Rotavirus #2</td>
+                                <td>2 of 2 (or 3)</td>
+                                <td>{{vaccine_form.rota2_brand}}</td>
+                                <td>{{vaccine_form.rota2_date}}</td>
+                                <td>{{vaccine_form.rota2_loc}}</td>
+                                <td>{{vaccine_form.rota2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='7' colspan='1' >6 to 7 Months</td>
+                                <td>Hepatitis B #3</td>
+                                <td>3 of 3</td>
+                                <td>{{vaccine_form.hepb3_brand}}</td>
+                                <td>{{vaccine_form.hepb3_date}}</td>
+                                <td>{{vaccine_form.hepb3_loc}}</td>
+                                <td>{{vaccine_form.hepb3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>DTaP/DTwP #3</td>
+                                <td>3 of 5</td>
+                                <td>{{vaccine_form.dt3_brand}}</td>
+                                <td>{{vaccine_form.dt3_date}}</td>
+                                <td>{{vaccine_form.dt3_loc}}</td>
+                                <td>{{vaccine_form.dt3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>IPV/OPV #3</td>
+                                <td>3 of 5</td>
+                                <td>{{vaccine_form.ip3_brand}}</td>
+                                <td>{{vaccine_form.ip3_date}}</td>
+                                <td>{{vaccine_form.ip3_loc}}</td>
+                                <td>{{vaccine_form.ip3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HiB #3</td>
+                                <td>3 of 4</td>
+                                <td>{{vaccine_form.hi3_brand}}</td>
+                                <td>{{vaccine_form.hi3_date}}</td>
+                                <td>{{vaccine_form.hi3_loc}}</td>
+                                <td>{{vaccine_form.hi3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>PCV #3</td>
+                                <td>3 of 4</td>
+                                <td>{{vaccine_form.pcv3_brand}}</td>
+                                <td>{{vaccine_form.pcv3_date}}</td>
+                                <td>{{vaccine_form.pcv3_loc}}</td>
+                                <td>{{vaccine_form.pcv3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Rotavirus #3</td>
+                                <td>3 of 3</td>
+                                <td>{{vaccine_form.rota3_brand}}</td>
+                                <td>{{vaccine_form.rota3_date}}</td>
+                                <td>{{vaccine_form.rota3_loc}}</td>
+                                <td>{{vaccine_form.rota3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Influenza #1</td>
+                                <td>1 of 2</td>
+                                <td>{{vaccine_form.influ1of2_brand}}</td>
+                                <td>{{vaccine_form.influ1of2_date}}</td>
+                                <td>{{vaccine_form.influ1of2_loc}}</td>
+                                <td>{{vaccine_form.influ1of2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='3' colspan='1' >9 Months</td>
+                                <td>Measles</td>
+                                <td>1 of 1</td>
+                                <td>{{vaccine_form.measles_brand}}</td>
+                                <td>{{vaccine_form.measles_date}}</td>
+                                <td>{{vaccine_form.measles_loc}}</td>
+                                <td>{{vaccine_form.measles_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Japanese Encephalitis B #1</td>
+                                <td>1 of 2 </td>
+                                <td>{{vaccine_form.jap1of2_brand}}</td>
+                                <td>{{vaccine_form.jap1of2_date}}</td>
+                                <td>{{vaccine_form.jap1of2_loc}}</td>
+                                <td>{{vaccine_form.jap1of2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Influenza #1</td>
+                                <td>2 of 2</td>
+                                <td>{{vaccine_form.influ2of2_brand}}</td>
+                                <td>{{vaccine_form.influ2of2_date}}</td>
+                                <td>{{vaccine_form.influ2of2_loc}}</td>
+                                <td>{{vaccine_form.influ2of2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='7' colspan='1' >12 to 15 Months</td>
+                                <td>MMR #1</td>
+                                <td>1 of 2</td>
+                                <td>{{vaccine_form.mmr1_brand}}</td>
+                                <td>{{vaccine_form.mmr1_date}}</td>
+                                <td>{{vaccine_form.mmr1_loc}}</td>
+                                <td>{{vaccine_form.mmr1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Varicella #1</td>
+                                <td>1 of 2</td>
+                                <td>{{vaccine_form.vari1_brand}}</td>
+                                <td>{{vaccine_form.vari1_date}}</td>
+                                <td>{{vaccine_form.vari1_loc}}</td>
+                                <td>{{vaccine_form.vari1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>DTaP/DTwP Booster #1</td>
+                                <td>4 of 5</td>
+                                <td>{{vaccine_form.dtbooster1_brand}}</td>
+                                <td>{{vaccine_form.dtbooster1_date}}</td>
+                                <td>{{vaccine_form.dtbooster1_loc}}</td>
+                                <td>{{vaccine_form.dtbooster1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>IPV/OPV Booster #1</td>
+                                <td>4 of 5</td>
+                                <td>{{vaccine_form.ipbooster1_brand}}</td>
+                                <td>{{vaccine_form.ipbooster1_date}}</td>
+                                <td>{{vaccine_form.ipbooster1_loc}}</td>
+                                <td>{{vaccine_form.ipbooster1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HiB Booster #1</td>
+                                <td>4 of 4</td>
+                                <td>{{vaccine_form.hibooster1_brand}}</td>
+                                <td>{{vaccine_form.hibooster1_date}}</td>
+                                <td>{{vaccine_form.hibooster1_loc}}</td>
+                                <td>{{vaccine_form.hibooster1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>PCV Booster #1</td>
+                                <td>4 of 4</td>
+                                <td>{{vaccine_form.pcvbooster1_brand}}</td>
+                                <td>{{vaccine_form.pcvbooster1_date}}</td>
+                                <td>{{vaccine_form.pcvbooster1_loc}}</td>
+                                <td>{{vaccine_form.pcvbooster1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Inactivated Hepatitis A #1</td>
+                                <td>1 of 2</td>
+                                <td>{{vaccine_form.inacthepa1_brand}}</td>
+                                <td>{{vaccine_form.inacthepa1_date}}</td>
+                                <td>{{vaccine_form.inacthepa1_loc}}</td>
+                                <td>{{vaccine_form.inacthepa1_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>18 to 21 Months</td>
+                                <td>Inactivated Hepatitis A #2</td>
+                                <td>2 of 2</td>
+                                <td>{{vaccine_form.inacthepa2_brand}}</td>
+                                <td>{{vaccine_form.inacthepa2_date}}</td>
+                                <td>{{vaccine_form.inacthepa2_loc}}</td>
+                                <td>{{vaccine_form.inacthepa2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='3' colspan='1' >24 Months</td>
+                                <td>Meninggococcal Vaccine</td>
+                                <td>1 of 1</td>
+                                <td>{{vaccine_form.mening_brand}}</td>
+                                <td>{{vaccine_form.mening_date}}</td>
+                                <td>{{vaccine_form.mening_loc}}</td>
+                                <td>{{vaccine_form.mening_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Typhoid</td>
+                                <td>1 of 1</td>
+                                <td>{{vaccine_form.typhoid_brand}}</td>
+                                <td>{{vaccine_form.typhoid_date}}</td>
+                                <td>{{vaccine_form.typhoid_loc}}</td>
+                                <td>{{vaccine_form.typhoid_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Japanese Encephalitis B #1</td>
+                                <td>2 of 2</td>
+                                <td>{{vaccine_form.jap2of2_brand}}</td>
+                                <td>{{vaccine_form.jap2of2_date}}</td>
+                                <td>{{vaccine_form.jap2of2_loc}}</td>
+                                <td>{{vaccine_form.jap2of2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>4 to 6 Years</td>
+                                <td>DTaP/DTwP Booster #2</td>
+                                <td>5 of 5</td>
+                                <td>{{vaccine_form.dtbooster2_brand}}</td>
+                                <td>{{vaccine_form.dtbooster2_date}}</td>
+                                <td>{{vaccine_form.dtbooster2_loc}}</td>
+                                <td>{{vaccine_form.dtbooster2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='4' colspan='1' >10 Years</td>
+                                <td>IPV/OPV Booster #2</td>
+                                <td>5 of 5</td>
+                                <td>{{vaccine_form.ipbooster2_brand}}</td>
+                                <td>{{vaccine_form.ipbooster2_date}}</td>
+                                <td>{{vaccine_form.ipbooster2_loc}}</td>
+                                <td>{{vaccine_form.ipbooster2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>MMR #2</td>
+                                <td>2 of 2</td>
+                                <td>{{vaccine_form.mmr2_brand}}</td>
+                                <td>{{vaccine_form.mmr2_date}}</td>
+                                <td>{{vaccine_form.mmr2_loc}}</td>
+                                <td>{{vaccine_form.mmr2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Varicella #2</td>
+                                <td>2 of 2</td>
+                                <td>{{vaccine_form.vari2_brand}}</td>
+                                <td>{{vaccine_form.vari2_date}}</td>
+                                <td>{{vaccine_form.vari2_loc}}</td>
+                                <td>{{vaccine_form.vari2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Td/Tdap Booster #3</td>
+                                <td>every 10 yrs</td>
+                                <td>{{vaccine_form.tdbooster3_brand}}</td>
+                                <td>{{vaccine_form.tdbooster3_date}}</td>
+                                <td>{{vaccine_form.tdbooster3_loc}}</td>
+                                <td>{{vaccine_form.tdbooster3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='2' colspan='1' >9 to 14 Years</td>
+                                <td>HPV #1</td>
+                                <td>1 of 2</td>
+                                <td>{{vaccine_form.hpv1of2_brand}}</td>
+                                <td>{{vaccine_form.hpv1of2_date}}</td>
+                                <td>{{vaccine_form.hpv1of2_loc}}</td>
+                                <td>{{vaccine_form.hpv1of2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HPV #2</td>
+                                <td>2 of 2</td>
+                                <td>{{vaccine_form.hpv2of2_brand}}</td>
+                                <td>{{vaccine_form.hpv2of2_date}}</td>
+                                <td>{{vaccine_form.hpv2of2_loc}}</td>
+                                <td>{{vaccine_form.hpv2of2_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td rowspan='3' colspan='1' >15 and Up</td>
+                                <td>HPV #1</td>
+                                <td>1 of 3</td>
+                                <td>{{vaccine_form.hpv1of3_brand}}</td>
+                                <td>{{vaccine_form.hpv1of3_date}}</td>
+                                <td>{{vaccine_form.hpv1of3_loc}}</td>
+                                <td>{{vaccine_form.hpv1of3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HPV #2</td>
+                                <td>2 of 3</td>
+                                <td>{{vaccine_form.hpv2of3_brand}}</td>
+                                <td>{{vaccine_form.hpv2of3_date}}</td>
+                                <td>{{vaccine_form.hpv2of3_loc}}</td>
+                                <td>{{vaccine_form.hpv2of3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>HPV #3</td>
+                                <td>3 of 3</td>
+                                <td>{{vaccine_form.hpv3of3_brand}}</td>
+                                <td>{{vaccine_form.hpv3of3_date}}</td>
+                                <td>{{vaccine_form.hpv3of3_loc}}</td>
+                                <td>{{vaccine_form.hpv3of3_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td>Annual</td>
+                                <td>Influenza</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Others/Catch-up</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-success" style="margin-top: 12px;">Save</button>
+                    <a class="btn btn-danger" href="{% url 'vaccine' patient.id %}">Cancel</a> 
+                </form>               
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
